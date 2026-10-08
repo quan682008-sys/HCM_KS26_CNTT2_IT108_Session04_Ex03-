@@ -1,0 +1,23 @@
+﻿Bài 3 : Kiến trúc sư hạ tầng Cloud Server 
+* -Recurse (Đệ quy): áp dụng lệnh sâu vào toàn bộ các thư mục con và tệp tin bên trong để thực hiện từ trên xuống dưới theo cây thư mục.
+* -Force (Bắt buộc): Bỏ qua cảnh báo, ghi đè mà không hỏi lại hoặc cho phép tác động lên các đối tượng bị hạn chế như tệp ẩn, tệp chỉ đọc read-only,...
+
+
+        mkdir Project
+        cd Project
+        mkdir Farm-Manager
+        cd Farm-Manager
+        mkdir code/app
+        mkdir logs
+        mkdir database
+# -Force cho phép ghi đè nếu file đã có 
+New-Item  -ItemType File “code/app/main.py”, ‘code/app/model.py”. “code/app/utils.py” -Force  
+
+
+New-Item  -ItemType File "logs/app.log", "logs/sensor.log", "logs/access.log" -Force 
+New-Item  -ItemType File "database/farm.db", "database/init.sql" -Force  
+# -Recurse cho chép sao chép những file con bên trong để mang qua file mới.
+Copy-Item "." "../Farm-Manager-Backup" -Recurse 
+
+
+Dùng đường dẫn tương đối vì: Toàn bộ thư mục có thể di chuyển sang ổ đĩa khá hoặc đặt vào bất kỳ thư mục con nào mà không bị gãy vỡ. Trong PowerShell, một script hoặc file nhị phân trong chính thư mục hiện tại bắt buộc phải có tiền tố .\ đảm bảo tính bảo mật.
